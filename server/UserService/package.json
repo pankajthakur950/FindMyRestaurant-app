@@ -4,7 +4,7 @@
   "description": "Api for user data",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon --inspect src/app.js"
+    "start": "nodemon src/app.js"
   },
   "author": "Pankaj Thakur",
   "license": "ISC",

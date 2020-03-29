@@ -1,0 +1,21 @@
+{
+  "name": "graphqlapigateway",
+  "version": "1.0.0",
+  "description": "Api Gateway for find my restaurant application",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "author": "Pankaj Thakur",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^14.6.0",
+    "lodash": "^4.17.15",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.2"
+  }
+}

@@ -7,4 +7,4 @@ loaders(app);
 
 const PORT = process.env.PORT || keys.PORT;
 app.listen(PORT);
-console.log("User service is up on port : "+PORT);
+console.log("GraphQL api gateway is up on port : "+PORT);

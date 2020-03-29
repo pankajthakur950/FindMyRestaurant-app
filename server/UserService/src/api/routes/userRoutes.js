@@ -16,8 +16,9 @@ module.exports = app => {
       const result = await AuthenticationService.signupUser(user);
       if (result.error) {
         res.status(422).send(result.error);
+      }else{
+        res.send(result);
       }
-      res.send(result);
     } catch (error) {
       return next(error);
     }
