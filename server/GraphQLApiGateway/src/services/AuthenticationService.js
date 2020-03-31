@@ -6,17 +6,17 @@ const signupUser = async user => {
         console.log(response.data);
         return response.data;
     } catch (error) {
-        console.log(error.response.data);
-        return Promise.reject(error.response.data);
+        console.log(error);
+        return Promise.reject(error);
     }
-   
+
 };
 
-const signinUser = user =>{
-    
+const signinUser = user => {
+
 };
 
-module.exports= {
+module.exports = {
     signupUser,
     signinUser
 }
