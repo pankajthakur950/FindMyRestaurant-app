@@ -5,18 +5,11 @@ const requireLogin = require("../middlewares").requireLogin;
 module.exports = app => {
   app.post("/api/signup", async (req, res, next) => {
     try {
-      const { email, password, username, date_of_birth, image_url } = req.body;
-      const user = {
-        email,
-        password,
-        username,
-        date_of_birth,
-        image_url
-      };
+      const user = {...req.body.user};
       const result = await AuthenticationService.signupUser(user);
       if (result.error) {
         res.status(422).send(result.error);
-      }else{
+      } else {
         res.send(result);
       }
     } catch (error) {
@@ -37,7 +30,7 @@ module.exports = app => {
       username: req.user.username,
       date_of_birth: req.user.date_of_birth,
       image_url: req.user.image_url
-    }
+    };
     res.send(user);
   });
 };
