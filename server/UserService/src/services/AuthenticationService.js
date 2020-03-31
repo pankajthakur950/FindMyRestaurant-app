@@ -19,7 +19,7 @@ const signupUser = async user => {
             return {error : "Email is in use"};
         }
         const newUser = await new User(user).save();
-        return {token: tokenForUser(newUser)};
+        return {token: tokenForUser(newUser), id: newUser.id, email, username, date_of_birth, image_url};
     } catch (error) {
         throw error;
     }
