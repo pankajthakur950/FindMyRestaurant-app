@@ -39,3 +39,12 @@
     }
   }
 }
+.form-input-group{
+  margin: 45px 0;
+  display: flex;
+  justify-content: space-between;
+  .form-input{
+    margin: 0;
+    width: 45%;
+  }
+}
