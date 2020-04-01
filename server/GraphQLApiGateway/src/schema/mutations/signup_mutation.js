@@ -7,12 +7,16 @@ const signupMutation = {
   type: UserType,
   args: {
     email: { type: GraphQLString },
-    password: { type: GraphQLString }
+    password: { type: GraphQLString },
+    firstName: { type: GraphQLString },
+    lastName: { type: GraphQLString },
+    dateOfBirth: { type: GraphQLString }
   },
-  async resolve(parentValue, { email, password }) {
-    return await AuthService.signupUser({ email, password }).catch(error=>{
+  async resolve(parentValue, { email, password, firstName, lastName, dateOfBirth }) {
+    return await AuthService.signupUser({ email, password, firstName, lastName, dateOfBirth })
+      .catch(error => {
         throw new Error(error);
-    })
+      });
   }
 };
 

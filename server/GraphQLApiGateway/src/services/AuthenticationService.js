@@ -2,8 +2,8 @@ const axios = require('axios');
 
 const signupUser = async user => {
     try {
-        const response = await axios.post("http://localhost:4001/api/signup", user);
-        console.log(response.data);
+        const userObject = {user:{...user}};
+        const response = await axios.post("http://localhost:4001/api/signup", userObject);
         return response.data;
     } catch (error) {
         console.log(error);
