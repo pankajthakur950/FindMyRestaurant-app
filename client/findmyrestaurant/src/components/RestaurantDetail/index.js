@@ -11,7 +11,6 @@ class RestaurantList extends React.Component {
         this.props.fetchRestaurantDetails(this.props.match.params.restaurantId);
     }
     render() {
-        console.log(this.props.restaurant);
         if(!this.props.restaurant){
             return null;
         }
@@ -19,7 +18,9 @@ class RestaurantList extends React.Component {
         return (
             <section className="restaurant-detail-section">
                 <HeroDetail restaurant={this.props.restaurant}/>
+                {this.props.restaurant.reviews.length}
             </section>
+            
          )
     }
 }

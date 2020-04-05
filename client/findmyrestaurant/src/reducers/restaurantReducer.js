@@ -1,4 +1,4 @@
-import { FETCH_RESTAURANTS, FETCH_RESTAURANT_DETAILS } from "actions/types";
+import { FETCH_RESTAURANTS, FETCH_RESTAURANT_DETAILS, UPDATE_RESTAURANT_REVIEW } from "actions/types";
 
 const INITIAL_STATE = {
     restaurants: [],
@@ -12,6 +12,10 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, ...action.payload }
         case FETCH_RESTAURANT_DETAILS:
             return { ...state, selectedRestaurant: action.payload }
+        case UPDATE_RESTAURANT_REVIEW:
+            const selectedRestaurantReviews = [...state.selectedRestaurant.reviews, action.payload];
+            const selectedRestaurant = {...state.selectedRestaurant, reviews: selectedRestaurantReviews};
+            return {...state, selectedRestaurant};
         default:
             return state;
     }

@@ -11,6 +11,7 @@ export const SIGNIN_MUTATION = ({ email, password }) =>
     `
     mutation{
         signin(email: "${email}", password:"${password}"){
+            _id,
             email,
             token,
             username,
@@ -21,7 +22,7 @@ export const SIGNIN_MUTATION = ({ email, password }) =>
 export const ADDREVIEW_MUTATION = ({ bathroom_quality, cleanliness, staff_behavior, delivery_speed, drive_thru_sassy_level, review, _restaurantId, _userId }) =>
     `
     mutation{
-        addReview(bathroom_quality: "${bathroom_quality}", cleanliness:"${cleanliness}", staff_behavior: "${staff_behavior}", delivery_speed: "${delivery_speed}", drive_thru_sassy_level: "${drive_thru_sassy_level}", review: "${review}", _restaurantId: "${_restaurantId}", _userId: "${_userId}"){
+        addReview(bathroom_quality: ${bathroom_quality}, cleanliness:${cleanliness}, staff_behavior: ${staff_behavior}, delivery_speed: ${delivery_speed}, drive_thru_sassy_level: ${drive_thru_sassy_level}, review: "${review}", _restaurantId: ${_restaurantId}, _userId: "${_userId}"){
             review
             bathroom_quality
             cleanliness
@@ -62,6 +63,9 @@ export const FETCHRESTAURANTDETAILS_QUERY = (id) =>
                                             latitude,
                                             longitude,
                                             locality
+                                        }
+                                        reviews{
+                                            review
                                         }
                                     }
                                 }`;

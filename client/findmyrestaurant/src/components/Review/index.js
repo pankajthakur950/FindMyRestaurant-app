@@ -25,6 +25,22 @@ class Review extends React.Component {
   onReviewTextChange = (event) => {
     this.setState({ review: event.target.value })
   }
+  submitReview = async (event) => {
+    event.preventDefault();
+    
+    try {
+      const reviewAdded = await this.props.addReview({ 
+        ...this.state, 
+        _restaurantId: this.props.selectedRestaurant._id, 
+        _userId: this.props.currentUser._id 
+      });
+      if(reviewAdded){
+        this.props.addReviewCallback();
+      }
+    } catch (error) {
+      console.log("Something went wrong while adding review", error.message);
+    }
+  }
 
   render() {
     return (
@@ -67,15 +83,15 @@ class Review extends React.Component {
             value={this.state.review}>
           </textarea>
           <div className="review-buttons">
-            <Button classes="add-review-btn" onClick={()=>{this.props.addReview(this.state)}}>Add review</Button>
+            <Button classes="add-review-btn" onClick={this.submitReview}>Add review</Button>
           </div>
         </div>
       </div>
     );
   }
 }
-const mapStateToProps = ({auth})=>{
-  return {};
+const mapStateToProps = ({ auth, restaurant }) => {
+  return { selectedRestaurant: restaurant.selectedRestaurant, currentUser: auth.currentUser };
 };
 
-export default connect(mapStateToProps, {addReview})(Review);
+export default connect(mapStateToProps, { addReview })(Review);

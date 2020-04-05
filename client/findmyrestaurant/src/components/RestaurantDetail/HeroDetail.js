@@ -15,6 +15,9 @@ class HeroDetail extends React.Component {
             isModalOpen: false
         }
     }
+    dismissModalPopup = () => {
+        this.setState({ isModalOpen: false });
+    }
     render() {
         const { name, image_url, location, average_rating, all_reviews_count } = this.props.restaurant;
         const { isSignedIn } = this.props;
@@ -48,14 +51,14 @@ class HeroDetail extends React.Component {
                                 <span className="icon"><FaRegStar /></span>
                                 <span>Write a Review</span>
                             </Button>
-                            <Modal dismissHandler={() => this.setState({ isModalOpen: false })}
+                            <Modal dismissHandler={this.dismissModalPopup}
                                 showModal={this.state.isModalOpen}>
                                 {
-                                    isSignedIn ? 
-                                        
+                                    isSignedIn ?
+                                        <Review addReviewCallback={this.dismissModalPopup} /> :
                                         (<Login hideHeader={true}
-                                            signInCallback={() => this.setState({ isModalOpen: false })} />
-                                        ): <Review/> 
+                                            signInCallback={this.dismissModalPopup} />
+                                        )
                                 }
                             </Modal>
 

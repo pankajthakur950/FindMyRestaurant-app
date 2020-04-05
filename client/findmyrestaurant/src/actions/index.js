@@ -3,7 +3,8 @@ import {
     SIGN_UP,
     SIGN_UP_ERROR,
     SIGN_IN,
-    FETCH_RESTAURANT_DETAILS
+    FETCH_RESTAURANT_DETAILS,
+    UPDATE_RESTAURANT_REVIEW
 } from 'actions/types';
 import postData from "api";
 import {
@@ -93,7 +94,7 @@ export const addReview = review => async dispatch => {
             } else {
                 const review = {...response.data.addReview};
                 dispatch({
-                    type: SIGN_IN,
+                    type: UPDATE_RESTAURANT_REVIEW,
                     payload: review
                 });
                 resolve(true);
