@@ -12,7 +12,7 @@ const reviewSchema = new Schema({
   drive_thru_sassy_level: Number,
   review: String,
   review_date: Date,
-  _restaurantId: { type: Schema.Types.ObjectId, ref: "restaurants" },
+  _restaurantId: { type: Number, ref: "restaurants" },
   _userId: { type: Schema.Types.ObjectId, ref: "users" }
   //images: Array[]
 });

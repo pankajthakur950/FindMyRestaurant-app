@@ -6,8 +6,7 @@ module.exports = app => {
   app.get("/api/restaurants", async (req, res, next) => {
     try {
       const results = await Restaurant.find({})
-        .limit(10)
-        .skip(20);
+        .limit(20);
       res.send(results);
     } catch (error) {
       return next(error);
@@ -35,9 +34,10 @@ module.exports = app => {
     let rawdata = fs.readFileSync("./src/config/restaurantData.json");
     let restaurantData = JSON.parse(rawdata);
 
-    for (var i = 0; i < 80; i++) {
+    for (var i = 0; i < 100; i++) {
       (function(index) {
         let obj = restaurantData[index];
+        obj._id = obj.id;
         new Restaurant(obj).save().then(
           restaurant => {
             console.log(restaurant);
