@@ -23,11 +23,10 @@ const signupUser = async user => {
     } catch (error) {
         throw error;
     }
-    
 };
 
 const signinUser = user =>{
-    return {token: tokenForUser(user)};
+    return {token: tokenForUser(user), ...user.toObject()};
 };
 
 module.exports= {

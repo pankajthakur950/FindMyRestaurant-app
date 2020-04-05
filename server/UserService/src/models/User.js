@@ -5,7 +5,7 @@ const { Schema } = mongoose;
 //This scema needs to contain all the keys which can be there in any user record.
 const userSchema = new Schema({
   email: { type: String, unique: true },
-  password: { type: String, select: false },
+  password: { type: String },
   username: String,
   firstName: String,
   lastName: String,
