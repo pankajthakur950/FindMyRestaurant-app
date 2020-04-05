@@ -2,10 +2,13 @@ import React from "react";
 
 import FormInput from "components/Form/FormInput";
 import Button from "components/Button";
+import { connect } from "react-redux";
 
-export default class Login extends React.Component {
-  constructor() {
-    super();
+import { signInUser } from "actions";
+
+class Login extends React.Component {
+  constructor(props) {
+    super(props);
     this.state = {
       email: "",
       password: ""
@@ -19,20 +22,20 @@ export default class Login extends React.Component {
     event.preventDefault();
     const { email, password } = this.state;
     try {
-      //await auth.signInWithEmailAndPassword(email, password);
-      this.setState({
-        email: "",
-        password: ""
-      });
+      const user = {...this.state};
+      const isSignedIn = await this.props.signInUser(user);
+      if(isSignedIn){
+        this.props.signInCallback();
+      }
     } catch (error) {
-      console.log("Error signing in..", error.message);
+      console.log("Something went wrong while signing user", error.message);
     }
   };
 
   render() {
     return (
       <div className="login-container">
-        <h2>I already have an account</h2>
+        <h2 style={{display:`${this.props.hideHeader?'none':'block'}`}}>I already have an account</h2>
         <span>Sign in with your email and password</span>
         <form onSubmit={this.submitSignInForm}>
           <FormInput
@@ -58,3 +61,13 @@ export default class Login extends React.Component {
     );
   }
 }
+
+
+const mapStatetoProps = ({auth}) =>{
+  return{
+    signUpErrors: auth.signInErrors,
+    isSignedIn: auth.isSignedIn
+  }
+}
+
+export default connect(mapStatetoProps, { signInUser })(Login)
