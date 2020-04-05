@@ -1,5 +1,5 @@
 const graphql = require('graphql');
-const { GraphQLObjectType, GraphQLString } = graphql;
+const { GraphQLObjectType, GraphQLString, GraphQLInt } = graphql;
 const UserType = require('./user_type');
 const RestaurantListType = require('./restaurant_list_type');
 const RestaurantType = require('./restaurant_type');
@@ -27,7 +27,7 @@ const RootQueryType = new GraphQLObjectType({
     },
     restaurant: {
       type: RestaurantType,
-      args: { id: { type: GraphQLString } },
+      args: { id: { type: GraphQLInt } },
       async resolve(parentValue, args) {
         return await RestaurantService.getRestaurant(args.id).catch(error => {
           throw new Error(error);
