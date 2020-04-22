@@ -4,10 +4,19 @@ const RestaurantService = require("../../services/RestaurantService");
 
 module.exports = app => {
   app.get("/api/restaurants", async (req, res, next) => {
+    
     try {
-      const results = await Restaurant.find({})
-        .limit(20);
-      res.send(results);
+      const pageSize= 20;
+      const skips = pageSize * (req.query.page_num - 1);
+      const restaurantCount = await Restaurant.countDocuments();
+      const results = await Restaurant.find({}).skip(skips).limit(pageSize);
+      var responseObject = {
+        restaurants: results,
+        results_found: restaurantCount,
+        results_start: skips,
+        results_shown: skips + pageSize
+      };
+      res.send(responseObject);
     } catch (error) {
       return next(error);
     }

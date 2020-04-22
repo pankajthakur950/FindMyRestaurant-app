@@ -6,7 +6,7 @@ import { ReactComponent as Logo } from "assets/Logo.svg";
 
 function Header({ currentUser }) {
   return (
-    <div className="header">
+    <div className="header container">
       <Link className="header__logo" to={"/"}>
         <Logo />
       </Link>

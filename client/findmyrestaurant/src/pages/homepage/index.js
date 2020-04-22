@@ -8,8 +8,19 @@ import { fetchRestaurants } from "actions";
 import "pages/homepage/homepage.scss";
 
 class Homepage extends React.Component {
+  constructor(props){
+    super(props);
+    this.state={
+      page_num:1
+    }
+  }
+  fetchMoreRestaurants = () => {
+    const page_num = this.state.page_num + 1
+    this.setState({page_num})
+    this.props.fetchRestaurants(page_num);
+  }
   componentDidMount() {
-    this.props.fetchRestaurants();
+    this.props.fetchRestaurants(1);
   }
   render() {
     return (
@@ -27,7 +38,11 @@ class Homepage extends React.Component {
             <RestaurantList restaurants={this.props.restaurants} />
           </div>
           <div className="text-center">
-            <Button>More Restaurants</Button>
+            {
+              this.props.restaurantRendered < this.props.restaurantCount ?
+              <Button onClick={this.fetchMoreRestaurants}>More Restaurants</Button> : 
+              null
+            }
           </div>
         </div>
       </section>
@@ -38,7 +53,8 @@ class Homepage extends React.Component {
 const mapStatetoProps = ({ restaurant }) => {
   return {
     restaurants: restaurant.restaurants,
-    restaurantCount: restaurant.results_found
+    restaurantCount: restaurant.results_found,
+    restaurantRendered: restaurant.results_shown
   }
 }
 

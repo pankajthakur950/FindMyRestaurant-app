@@ -32,9 +32,11 @@ export const ADDREVIEW_MUTATION = ({ bathroom_quality, cleanliness, staff_behavi
         }
     }`;
 
-export const FETCHRESTAURANTS_QUERY = `{
-                                    restaurantList{
+export const FETCHRESTAURANTS_QUERY = (page_num) =>
+                                `{
+                                    restaurantList(page_num:${page_num}){
                                         results_found
+                                        results_shown
                                         restaurants{
                                             _id
                                             name
@@ -66,6 +68,13 @@ export const FETCHRESTAURANTDETAILS_QUERY = (id) =>
                                         }
                                         reviews{
                                             review
+                                            bathroom_quality
+                                            cleanliness
+                                            staff_behavior
+                                            delivery_speed
+                                            drive_thru_sassy_level
+                                            average_rating
+                                            review_date
                                         }
                                     }
                                 }`;

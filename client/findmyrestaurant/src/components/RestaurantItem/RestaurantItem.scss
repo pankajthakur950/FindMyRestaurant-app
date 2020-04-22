@@ -1,18 +1,32 @@
+@import "./../../scss/mixins";
+
 .restaurant-item-container {
   display: flex;
-  flex-basis: 25%;
-  max-width: 25%;
+  flex-basis: 100%;
+  max-width: 100%;
+  @include respond("small-only") {
+    flex-basis: 50%;
+    max-width: 50%;
+  }
+  @include respond("medium") {
+    flex-basis: 33.3%;
+    max-width: 33.3%;
+  }
+  @include respond("large") {
+    flex-basis: 25%;
+    max-width: 25%;
+  }
 }
 .restaurant-item {
   margin-left: 15px;
   margin-right: 15px;
   margin-bottom: 30px;
   width: 100%;
-  &:hover{
+  &:hover {
     cursor: pointer;
-    .restaurant-item__image img{
+    .restaurant-item__image img {
       transform: scale(1.1);
-      transition: transform .5s ease-in-out;
+      transition: transform 0.5s ease-in-out;
     }
   }
   .restaurant-item__image {
@@ -51,7 +65,7 @@
       color: #636363;
       line-height: 24px;
       display: flex;
-      span{
+      span {
         margin-right: 10px;
       }
       span.cuisine-item {

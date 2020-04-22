@@ -58,9 +58,10 @@ export const signInUser = user => async dispatch => {
     });
 };
 
-export const fetchRestaurants = () => async dispatch => {
+export const fetchRestaurants = (page_num) => async dispatch => {
     try {
-        const response = await postData(FETCHRESTAURANTS_QUERY);
+        const fetchRestaurantListQuery = FETCHRESTAURANTS_QUERY(page_num);
+        const response = await postData(fetchRestaurantListQuery);
         console.log(response.data);
         dispatch({
             type: FETCH_RESTAURANTS,

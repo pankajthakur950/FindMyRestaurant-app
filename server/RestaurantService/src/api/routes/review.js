@@ -4,6 +4,11 @@ module.exports = app => {
     app.post("/api/reviews", async (req, res, next) => {
         try {
             const review = { ...req.body.review };
+            review.average_rating = Math.round((review.cleanliness +
+                review.staff_behavior +
+                review.delivery_speed +
+                review.drive_thru_sassy_level +
+                review.bathroom_quality) / 5)
             const result = await ReviewService.addReview(review);
             res.send(result);
         } catch (error) {

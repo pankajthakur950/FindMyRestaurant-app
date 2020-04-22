@@ -14,6 +14,7 @@ const ReviewType = new GraphQLObjectType({
             cleanliness: { type: GraphQLInt },
             delivery_speed: { type: GraphQLInt },
             drive_thru_sassy_level: { type: GraphQLInt },
+            average_rating: { type: GraphQLInt },
             review_date: { type: GraphQLString },
             user: { type: UserType },
             restaurant: {

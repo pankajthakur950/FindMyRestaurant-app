@@ -10,6 +10,7 @@ const reviewSchema = new Schema({
   cleanliness: Number,
   delivery_speed: Number,
   drive_thru_sassy_level: Number,
+  average_rating: Number,
   review: String,
   review_date: Date,
   _restaurantId: { type: Number, ref: "restaurants" },

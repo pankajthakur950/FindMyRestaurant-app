@@ -19,8 +19,9 @@ const RootQueryType = new GraphQLObjectType({
     },
     restaurantList: {
       type: RestaurantListType,
+      args: { page_num: { type: GraphQLInt } },
       async resolve(parentValue, args) {
-        return await RestaurantService.getAllRestaurants().catch(error => {
+        return await RestaurantService.getAllRestaurants(args.page_num).catch(error => {
           throw new Error(error);
         });
       }

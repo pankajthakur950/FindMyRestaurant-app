@@ -19,6 +19,7 @@ const addReview = async review => {
         delivery_speed +
         drive_thru_sassy_level) /
       5;
+    review.review_date = new Date();
     const response = await new Review(review).save();
     RestaurantService.updateRestaurantReviewAndRating(_restaurantId, average_rating);
     return response;

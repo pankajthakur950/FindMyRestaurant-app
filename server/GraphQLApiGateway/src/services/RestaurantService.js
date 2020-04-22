@@ -1,14 +1,11 @@
 const axios = require("axios");
 const BASE_URL = "http://localhost:3001"
 
-const getAllRestaurants = async () => {
+const getAllRestaurants = async (page_num) => {
     try {
-        const response = await axios.get(`${BASE_URL}/api/restaurants`);
+        const response = await axios.get(`${BASE_URL}/api/restaurants?page_num=${page_num}`);
         const restaurantList = response.data;
-        const allRestaurants = {};
-        allRestaurants.results_found = restaurantList.length;
-        allRestaurants.restaurants = restaurantList;
-        return allRestaurants;
+        return restaurantList;
     } catch (error) {
         return Promise.reject(error);
     }
