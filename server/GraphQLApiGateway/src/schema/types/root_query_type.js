@@ -26,6 +26,18 @@ const RootQueryType = new GraphQLObjectType({
         });
       }
     },
+    searchRestaurant: {
+      type: RestaurantListType,
+      args: {
+        name: { type: GraphQLString },
+        "location_city" : {type:GraphQLString}
+      },
+      async resolve(parentValue, args) {
+        return await RestaurantService.searchRestaurant(args).catch(error => {
+          throw new Error(error);
+        });
+      }
+    },
     restaurant: {
       type: RestaurantType,
       args: { id: { type: GraphQLInt } },

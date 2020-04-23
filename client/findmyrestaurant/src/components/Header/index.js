@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import "components/Header/Header.scss";
-import { ReactComponent as Logo } from "assets/Logo.svg";
+import Logo from "assets/logo.png";
 
 function Header({ currentUser }) {
   return (
     <div className="header container">
       <Link className="header__logo" to={"/"}>
-        <Logo />
+        <img src={Logo}/>
       </Link>
       <div className="header__nav-links">
         <Link className="nav-link" to={"/shop"}>

@@ -23,6 +23,25 @@ const getRestaurant = async (id) => {
     }
 };
 
+const searchRestaurant = async args => {
+    try {
+        let query = '';
+        for(key in args){
+            value=args[key];
+            key = key.replace("_",".");
+            query = `${query}${key}=${value}&`;
+        }
+        console.log(`${BASE_URL}/api/search/?${query}`)
+        const response = await axios.get(`${BASE_URL}/api/search/?${query}`);
+        const restaurantList = {};
+        restaurantList.restaurants = response.data;
+        restaurantList.results_found = response.data.length;
+        return restaurantList;
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
 const addReview = async (args) => {
     try {
         const reviewObject = {review: {...args}};
@@ -37,5 +56,6 @@ const addReview = async (args) => {
 module.exports = {
     getAllRestaurants,
     getRestaurant,
-    addReview
+    addReview,
+    searchRestaurant
 };

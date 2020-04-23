@@ -11,6 +11,16 @@ const getRestaurantById = async _id => {
   }
 };
 
+const searchRestaurant = async searchCriteria => {
+  try {
+    const restaurant = await Restaurant.filterData(searchCriteria);
+    return restaurant;
+  } catch (error) {
+    if (error instanceof mongoose.Error.CastError) return [];
+    throw error;
+  }
+};
+
 const updateRestaurantReviewAndRating = async (_id, rating) => {
   try {
     const restaurant = await Restaurant.findById({ _id });
@@ -25,5 +35,6 @@ const updateRestaurantReviewAndRating = async (_id, rating) => {
 
 module.exports = {
   getRestaurantById,
-  updateRestaurantReviewAndRating
+  updateRestaurantReviewAndRating,
+  searchRestaurant
 };

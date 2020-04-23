@@ -4,7 +4,7 @@
     align-items: center;
     height: 70px;
     width: 100%;
-    margin-bottom: 25px;
+    margin: 20px 0;
     .header__nav-links{
         display: flex;
         justify-content: flex-end;
@@ -12,10 +12,10 @@
         .nav-link{
             padding: 10px 15px;
             cursor: pointer;
+            font-weight: 500;
         }
     }
     .header__logo{
-        width: 70px;
-        padding: 25px;
+        width: 220px;
     }
 }

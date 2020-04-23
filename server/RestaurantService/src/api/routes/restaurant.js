@@ -37,6 +37,19 @@ module.exports = app => {
     }
   });
 
+  app.get("/api/search", async (req, res, next) => {
+    try {
+      const criteria = req.query;
+      const restaurant = await RestaurantService.searchRestaurant(criteria);
+      if (restaurant.length === 0) {
+        return res.status(404).send({ error: "No restaurant found with given ID" });
+      } 
+      res.send(restaurant);
+    } catch (error) {
+      return next(error);
+    }
+  });
+
   app.post("/api/restaurants", (req, res) => {
     const fs = require("fs");
 
