@@ -8,7 +8,7 @@ export default function Map({lat, lng}) {
         async function loadMap(){
             if(!map){
                 console.log("loading first time only...")
-                const googleMap = await loadGoogleMapsApi({ key: "AIzaSyCo2AjCA4QSCdZMD_mq116R-fz-64tjYeA" });
+                const googleMap = await loadGoogleMapsApi({ key: "" });
                 setMap(googleMap);
             }   
             map && new map.Map(mapElementRef.current, {
