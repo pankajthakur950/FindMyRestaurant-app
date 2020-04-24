@@ -3,39 +3,53 @@ import { connect } from "react-redux";
 import RestaurantList from "components/RestaurantList";
 import Button from "components/Button";
 
-import { fetchRestaurants } from "actions";
+import { fetchRestaurants, searchRestaurants } from "actions";
 import HeroImage from "assets/hero-image.jpg";
 
 import "pages/homepage/homepage.scss";
 
 class Homepage extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
-    this.state={
-      page_num:1
+    this.state = {
+      page_num: 1,
+      searchInput:""
     }
   }
   fetchMoreRestaurants = () => {
     const page_num = this.state.page_num + 1
-    this.setState({page_num})
+    this.setState({ page_num })
     this.props.fetchRestaurants(page_num);
   }
   componentDidMount() {
     this.props.fetchRestaurants(1);
   }
+  submitSearchForm = async event => {
+    event.preventDefault();
+    const { searchInput } = this.state;
+    try {
+      const searchQuery = { "location_city" : searchInput };
+      await this.props.searchRestaurants(searchQuery);
+      this.props.history.push('/search');
+    } catch (error) {
+      console.log("Something went wrong while search", error.message);
+    }
+  };
   render() {
     return (
       <section className="restaurant-list-section">
         <div className="hero-image-container">
           <div className="hero-banner" style={{ backgroundImage: `url(${HeroImage})` }}>
             <div className="hero-banner__content">
-                <h1 class="hero-header">FIND THE BEST RESTAURANTS AT THE BEST PRICE</h1>
-                <p class="hero-subHeader">More than 20,000 restaurants all around the world and in your country or city</p>
-                <form id="searchForm">
-                  <input class="search-input" placeholder="Search restaurants in city"/>
-                  <Button classes="search-btn">Find</Button>
-                </form>
-                <p><a href="#"/>Or view all 360 restaurants in and/or around your current city</p>
+              <h1 className="hero-header">FIND THE BEST RESTAURANTS AT THE BEST PRICE</h1>
+              <p className="hero-subHeader">More than 20,000 restaurants all around the world and in your country or city</p>
+              <form id="searchForm" onSubmit={this.submitSearchForm}>
+                <input className="search-input" value={this.state.searchInput}
+                  onChange={(event) => this.setState({ searchInput: event.target.value })}
+                  placeholder="Search restaurants in city" />
+                <Button classes="search-btn">Find</Button>
+              </form>
+              <p><a href="#" />Or view all 360 restaurants in and/or around your current city</p>
             </div>
           </div>
         </div>
@@ -54,8 +68,8 @@ class Homepage extends React.Component {
           <div className="text-center">
             {
               this.props.restaurantRendered < this.props.restaurantCount ?
-              <Button onClick={this.fetchMoreRestaurants}>More Restaurants</Button> : 
-              null
+                <Button onClick={this.fetchMoreRestaurants}>More Restaurants</Button> :
+                null
             }
           </div>
         </div>
@@ -72,4 +86,4 @@ const mapStatetoProps = ({ restaurant }) => {
   }
 }
 
-export default connect(mapStatetoProps, { fetchRestaurants })(Homepage)
+export default connect(mapStatetoProps, { fetchRestaurants, searchRestaurants })(Homepage)

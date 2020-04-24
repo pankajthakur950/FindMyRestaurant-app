@@ -1,25 +1,32 @@
 import React, {useEffect, useRef, useState} from 'react';
 import loadGoogleMapsApi from 'load-google-maps-api';
+import config from 'config/keys';
 
-export default function Map({lat, lng}) {
+export default function Map({options, onMount}) {
+    
     const mapElementRef = useRef();
     const [map, setMap] = useState();
+    let infowindow=null;
     useEffect(()=>{
         async function loadMap(){
-            if(!map){
-                console.log("loading first time only...")
-                const googleMap = await loadGoogleMapsApi({ key: "" });
-                setMap(googleMap);
+            console.log(options);
+            if(!window.google){
+                const googleMap = await loadGoogleMapsApi({ key: config.GOOGLE_API });
+                setMap(new googleMap.Map(mapElementRef.current, options));
+                
+                
             }   
-            map && new map.Map(mapElementRef.current, {
-                center: { lat,lng },
-                zoom: 14
-              });
         }
         loadMap();
-   }, [map, lat, lng])
+   }, [map, options]);
+
+   useEffect(()=>{
+       console.log("map effect....");
+    infowindow = window.google && new window.google.maps.InfoWindow();
+    if (map && typeof onMount === `function`) onMount(map, infowindow);
+   },[map])
    
-    return (
+   return (
         <div className="map-container" ref={mapElementRef} id="directionMap">
         </div>
   );

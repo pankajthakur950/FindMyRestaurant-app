@@ -33,7 +33,7 @@ export const ADDREVIEW_MUTATION = ({ bathroom_quality, cleanliness, staff_behavi
     }`;
 
 export const FETCHRESTAURANTS_QUERY = (page_num) =>
-                                `{
+    `{
                                     restaurantList(page_num:${page_num}){
                                         results_found
                                         results_shown
@@ -50,6 +50,30 @@ export const FETCHRESTAURANTS_QUERY = (page_num) =>
                                         }
                                     }
                                 }`;
+export const SEARCHRESTAURANTS_QUERY = (query) =>{
+                        let searchCriteria='';
+                        for(let key in query){
+                            searchCriteria=`${searchCriteria} ${key}: "${query[key]}",`;
+                        }
+                        return `{
+                                    searchRestaurant(${searchCriteria}){
+                                        results_found
+                                        restaurants{
+                                            _id
+                                            name
+                                            cuisines
+                                            average_rating
+                                            all_reviews_count
+                                            image_url
+                                            location{
+                                                latitude,
+                                                longitude,
+                                                address
+                                            }
+                                        }
+                                    }
+                                }`;
+                            }
 export const FETCHRESTAURANTDETAILS_QUERY = (id) =>
     `{
                                     restaurant(id:${id}){

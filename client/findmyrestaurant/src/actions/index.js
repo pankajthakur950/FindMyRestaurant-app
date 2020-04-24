@@ -4,12 +4,14 @@ import {
     SIGN_UP_ERROR,
     SIGN_IN,
     FETCH_RESTAURANT_DETAILS,
-    UPDATE_RESTAURANT_REVIEW
+    UPDATE_RESTAURANT_REVIEW,
+    SEARCH_RESTAURANTS
 } from 'actions/types';
 import postData from "api";
 import {
     SIGNUP_MUTATION,
     FETCHRESTAURANTS_QUERY,
+    SEARCHRESTAURANTS_QUERY,
     FETCHRESTAURANTDETAILS_QUERY,
     SIGNIN_MUTATION,
     ADDREVIEW_MUTATION
@@ -60,12 +62,26 @@ export const signInUser = user => async dispatch => {
 
 export const fetchRestaurants = (page_num) => async dispatch => {
     try {
-        const fetchRestaurantListQuery = FETCHRESTAURANTS_QUERY(page_num);
-        const response = await postData(fetchRestaurantListQuery);
+        const searchRestaurantQuery = FETCHRESTAURANTS_QUERY(page_num);
+        const response = await postData(searchRestaurantQuery);
         console.log(response.data);
         dispatch({
             type: FETCH_RESTAURANTS,
             payload: response.data.restaurantList
+        });
+    } catch (error) {
+        throw error;
+    }
+};
+
+export const searchRestaurants = (query) => async dispatch => {
+    try {
+        const fetchRestaurantListQuery = SEARCHRESTAURANTS_QUERY(query);
+        const response = await postData(fetchRestaurantListQuery);
+        console.log(response.data);
+        dispatch({
+            type: SEARCH_RESTAURANTS,
+            payload: response.data.searchRestaurant
         });
     } catch (error) {
         throw error;

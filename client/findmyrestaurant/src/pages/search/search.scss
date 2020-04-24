@@ -1,0 +1,32 @@
+.search-container {
+  display: flex;
+  .restaurant-list-view {
+    width: 840px;
+    padding-top: 20px;
+    .restaurant-item-container {
+      flex-basis: 100%;
+      max-width: 100%;
+      a {
+        display: flex;
+      }
+      .restaurant-item__image {
+        width: 300px;
+        height: 200px;
+        border-radius: 10px;
+        flex: none;
+      }
+      .restaurant-item__content {
+        flex: auto;
+        margin-left: 20px;
+      }
+    }
+  }
+  .restaurant-map-view {
+    position: fixed !important;
+    width: calc(100% - 870px);
+    right: 0;
+    .map-container {
+      height: calc(100vh - 100px);
+    }
+  }
+}
