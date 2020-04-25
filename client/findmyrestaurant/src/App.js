@@ -27,6 +27,11 @@ class App extends React.Component {
             {this.state.currentUser ? <Redirect to="/" /> : <LoginPage />}
           </Route>
         </div>
+        <footer>
+          <div className="footer-container">
+            <p>© Copyright 2020 findmyrestaurant.com</p>
+          </div>
+        </footer>
       </BrowserRouter>
     );
   }

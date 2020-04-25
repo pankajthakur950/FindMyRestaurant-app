@@ -11,12 +11,6 @@ function Header({ currentUser }) {
         <img src={Logo} alt="FindMyRestaurant Logo"/>
       </Link>
       <div className="header__nav-links">
-        <Link className="nav-link" to={"/shop"}>
-          Link1
-        </Link>
-        <Link className="nav-link" to={"/contact"}>
-          Link2
-        </Link>
         {currentUser ? (
           <div className="nav-link" onClick={() => {console.log("write logout code....")}}>
             SIGNOUT

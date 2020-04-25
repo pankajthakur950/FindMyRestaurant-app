@@ -53,14 +53,14 @@ class Search extends Component {
                         `Restaurants in ${this.props.location.state.searchLocation}`
                     }
                 </h1>
-                <p class="results-found">{this.props.restaurants.length} results found</p>
+                <p className="results-found">{this.props.restaurants.length} results found</p>
                 <div className="restaurant-list-view">
                     <div className="restaurant-list-wrapper">
                         <RestaurantList restaurants={this.props.restaurants} restaurantHovered={this.highlightRestaurant} />
                     </div>
                 </div>
                 <div className="restaurant-map-view">
-                    <Map {...this.state.mapProps} searchRestaurants={this.searchRestaurants} />
+                    <Map {...this.state.mapProps} onVisibleAreaChanged={this.searchRestaurants} />
                 </div>
             </div>
         )

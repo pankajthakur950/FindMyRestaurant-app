@@ -28,7 +28,6 @@ class MapContainer extends React.Component {
                     title={restaurant.name}
                     name={restaurant.name}
                     restaurant={restaurant}
-                    scaledSize={new window.google.maps.Size(10, 10)}
                     animation={this.props.highlightRestaurant === restaurant ? window.google.maps.Animation.BOUNCE : ''}
                     position={position} />
 
@@ -36,8 +35,7 @@ class MapContainer extends React.Component {
         });
     }
     mapBoundChanged = (mapProps, map)=>{
-        console.log(mapProps);
-        this.props.searchRestaurants(map.getBounds());
+        this.props.onVisibleAreaChanged(map.getBounds());
     }
     render() {
         return (
@@ -52,7 +50,7 @@ class MapContainer extends React.Component {
                     marker={this.state.activeMarker}
                     visible={this.state.showingInfoWindow}>
                     <div>
-                        <h1>{this.state.selectedRestaurant.name}</h1>
+                        <h2>{this.state.selectedRestaurant.name}</h2>
                     </div>
                 </InfoWindow>
 
