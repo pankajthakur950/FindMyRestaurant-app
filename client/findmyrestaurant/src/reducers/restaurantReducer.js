@@ -10,6 +10,7 @@ const loadInitialState = () =>{
     }
     if(localStorage && localStorage.getItem('RESTAURANT_APP_STATE')){
         initialState = JSON.parse(localStorage.getItem('RESTAURANT_APP_STATE'));
+        initialState.restaurants = [];
     }
     return initialState;
     

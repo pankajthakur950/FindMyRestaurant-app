@@ -30,7 +30,12 @@ const RootQueryType = new GraphQLObjectType({
       type: RestaurantListType,
       args: {
         name: { type: GraphQLString },
-        "location_city" : {type:GraphQLString}
+        "location_city" : {type:GraphQLString},
+        "searchType":{type:GraphQLString},
+        "minLong":{type:GraphQLString},
+        "maxLong":{type:GraphQLString},
+        "minLat":{type:GraphQLString},
+        "maxLat":{type:GraphQLString}
       },
       async resolve(parentValue, args) {
         return await RestaurantService.searchRestaurant(args).catch(error => {

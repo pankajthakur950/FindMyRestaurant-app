@@ -1,35 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
+import { searchRestaurants } from "actions";
 import RestaurantList from "components/RestaurantList";
 import Map from "components/Map";
 import "pages/search/search.scss";
 
 class Search extends Component {
-    addMarkers = (map, infowindow) => {
-        this.props.restaurants.forEach((restaurant, index) => {
-            const position = {
-                lat: restaurant.location.latitude,
-                lng: restaurant.location.longitude
-            }
-            const marker = new window.google.maps.Marker({
-                map,
-                position,
-                label: restaurant.name,
-                title: restaurant.name,
-                info: restaurant
-            });
-            
-            marker.addListener(`click`, () => {
-                infowindow.setContent(`<div id="info-window"></div>`);
-                infowindow.open(map, marker);
-            })
-            
-        })
-    }
-
-    render() {
-        const mapProps = {
+    state = {
+        mapProps: {
             options: {
                 center: {
                     lat: this.props.restaurants[0].location.latitude,
@@ -37,17 +16,43 @@ class Search extends Component {
                 },
                 zoom: 12
             },
-            onMount: this.addMarkers
+            restaurants: this.props.restaurants,
+            highlightRestaurant: this.props.restaurants[0]
         }
+    }
+    highlightRestaurant = (restaurant) => {
+        if (this.state.mapProps.highlightRestaurant !== restaurant) {
+            this.setState({ mapProps: { ...this.state.mapProps, highlightRestaurant: restaurant } });
+        }
+    }
+    searchRestaurants = async (bounds) => {
+        try {
+            const searchQuery = {
+                "minLong": bounds.Ta.g,
+                "maxLong": bounds.Ta.i,
+                "minLat": bounds.Ya.g,
+                "maxLat": bounds.Ya.i,
+                "searchType": "coordinates"
+            };
+            await this.props.searchRestaurants(searchQuery);
+            const mapProps = {...this.state.mapProps, 
+                                restaurants: this.props.restaurants,
+                                highlightRestaurant: this.props.restaurants[0]}
+            this.setState({mapProps})
+        } catch (error) {
+            console.log("Something went wrong while search", error.message);
+        }
+    }
+    render() {
         return (
             <div className="search-container container">
                 <div className="restaurant-list-view">
                     <div className="restaurant-list-wrapper">
-                        <RestaurantList restaurants={this.props.restaurants} />
+                        <RestaurantList restaurants={this.props.restaurants} restaurantHovered={this.highlightRestaurant} />
                     </div>
                 </div>
                 <div className="restaurant-map-view">
-                    <Map {...mapProps} />
+                    <Map {...this.state.mapProps} searchRestaurants={this.searchRestaurants} />
                 </div>
             </div>
         )
@@ -60,4 +65,4 @@ const mapStatetoProps = ({ restaurant }) => {
     }
 }
 
-export default connect(mapStatetoProps)(Search)
+export default connect(mapStatetoProps, { searchRestaurants })(Search)

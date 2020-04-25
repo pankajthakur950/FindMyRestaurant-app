@@ -5,11 +5,13 @@ import "components/RestaurantItem/RestaurantItem.scss";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import StarRatingComponent from 'react-star-rating-component';
 
-export default function RestaurantItem({ _id, image_url, name, location, average_rating, all_reviews_count, cuisines }) {
+export default function RestaurantItem(props) {
+  const { _id, image_url, name, location, average_rating, all_reviews_count, cuisines } = props.restaurant;
+  const {restaurantHovered} = props;
   return (
     <div className="restaurant-item-container">
       <div className="restaurant-item">
-        <Link to={`/restaurant/${_id}`}>
+        <Link to={`/restaurant/${_id}`} onMouseOver={()=> restaurantHovered(props.restaurant)}>
           <div className="restaurant-item__image">
             <img src={image_url} alt={`${name}`} />
           </div>

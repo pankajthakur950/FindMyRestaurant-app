@@ -25,7 +25,7 @@
     position: fixed !important;
     width: calc(100% - 870px);
     right: 0;
-    .map-container {
+    &>div {
       height: calc(100vh - 100px);
     }
   }

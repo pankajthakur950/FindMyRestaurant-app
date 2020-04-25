@@ -1,33 +1,65 @@
-import React, {useEffect, useRef, useState} from 'react';
-import loadGoogleMapsApi from 'load-google-maps-api';
+import React from 'react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper } from 'google-maps-react';
 import config from 'config/keys';
 
-export default function Map({options, onMount}) {
-    
-    const mapElementRef = useRef();
-    const [map, setMap] = useState();
-    let infowindow=null;
-    useEffect(()=>{
-        async function loadMap(){
-            console.log(options);
-            if(!window.google){
-                const googleMap = await loadGoogleMapsApi({ key: config.GOOGLE_API });
-                setMap(new googleMap.Map(mapElementRef.current, options));
-                
-                
-            }   
-        }
-        loadMap();
-   }, [map, options]);
+class MapContainer extends React.Component {
+    state = {
+        showingInfoWindow: false,
+        activeMarker: {},
+        selectedRestaurant: {},
+    };
+    onMarkerClick = (props, marker) => {
+        this.setState({
+            activeMarker: marker,
+            showingInfoWindow: true,
+            selectedRestaurant: props.restaurant
+        });
+    }
+    renderRestaurantMarker() {
+        return this.props.restaurants.map((restaurant, index) => {
+            const position = {
+                lat: restaurant.location.latitude,
+                lng: restaurant.location.longitude
+            }
+            return (
+                <Marker
+                    onClick={this.onMarkerClick}
+                    key={index}
+                    title={restaurant.name}
+                    name={restaurant.name}
+                    restaurant={restaurant}
+                    scaledSize={new window.google.maps.Size(10, 10)}
+                    animation={this.props.highlightRestaurant === restaurant ? window.google.maps.Animation.BOUNCE : ''}
+                    position={position} />
 
-   useEffect(()=>{
-       console.log("map effect....");
-    infowindow = window.google && new window.google.maps.InfoWindow();
-    if (map && typeof onMount === `function`) onMount(map, infowindow);
-   },[map])
-   
-   return (
-        <div className="map-container" ref={mapElementRef} id="directionMap">
-        </div>
-  );
+            );
+        });
+    }
+    mapBoundChanged = (mapProps, map)=>{
+        console.log(mapProps);
+        this.props.searchRestaurants(map.getBounds());
+    }
+    render() {
+        return (
+            <Map google={this.props.google}
+                initialCenter={this.props.options.center}
+                onDragend={this.mapBoundChanged}
+                zoom={this.props.options.zoom}>
+                {
+                    this.renderRestaurantMarker()
+                }
+                <InfoWindow
+                    marker={this.state.activeMarker}
+                    visible={this.state.showingInfoWindow}>
+                    <div>
+                        <h1>{this.state.selectedRestaurant.name}</h1>
+                    </div>
+                </InfoWindow>
+
+            </Map>
+        );
+    }
 }
+export default GoogleApiWrapper({
+    apiKey: config.GOOGLE_API
+})(MapContainer)
