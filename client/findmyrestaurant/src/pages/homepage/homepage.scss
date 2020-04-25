@@ -62,6 +62,17 @@
         justify-content: center;
         margin: 20px 0;
       }
+      .search-near-you{
+        color: white;
+        background: transparent;
+        border: none;
+        outline: none;
+        border-bottom: 1px solid transparent;
+        cursor: pointer;
+        &:hover{
+          border-color: white;
+        }
+      }
     }
   }
   .section-title {

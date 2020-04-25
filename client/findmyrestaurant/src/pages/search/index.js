@@ -46,6 +46,14 @@ class Search extends Component {
     render() {
         return (
             <div className="search-container container">
+                <h1>
+                    {
+                        this.props.location.state.searchLocation === "current" ? 
+                        "Restaurants near you" :
+                        `Restaurants in ${this.props.location.state.searchLocation}`
+                    }
+                </h1>
+                <p class="results-found">{this.props.restaurants.length} results found</p>
                 <div className="restaurant-list-view">
                     <div className="restaurant-list-wrapper">
                         <RestaurantList restaurants={this.props.restaurants} restaurantHovered={this.highlightRestaurant} />

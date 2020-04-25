@@ -11,7 +11,8 @@ export default function RestaurantItem(props) {
   return (
     <div className="restaurant-item-container">
       <div className="restaurant-item">
-        <Link to={`/restaurant/${_id}`} onMouseOver={()=> restaurantHovered(props.restaurant)}>
+        <Link to={`/restaurant/${_id}`} 
+              onMouseOver={restaurantHovered ? ()=> restaurantHovered(props.restaurant): null}>
           <div className="restaurant-item__image">
             <img src={image_url} alt={`${name}`} />
           </div>

@@ -1,9 +1,20 @@
 .search-container {
   display: flex;
+  flex-direction: column;
+  h1{
+    margin: 50px 15px 15px;
+    font-size: 36px;
+    font-weight: 500;
+  }
+  p.results-found{
+    font-weight: 300;
+    font-size: 14px;
+    color: #484848;
+    margin: 0 15px 20px;
+  }
   .restaurant-list-view {
     width: 840px;
-    padding-top: 20px;
-    .restaurant-item-container {
+   .restaurant-item-container {
       flex-basis: 100%;
       max-width: 100%;
       a {

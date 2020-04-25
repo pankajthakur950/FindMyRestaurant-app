@@ -3,7 +3,9 @@ const Restaurant = mongoose.model("restaurant");
 
 const getRestaurantById = async _id => {
   try {
-    const restaurant = await Restaurant.findById({ _id });
+    let restaurant = await Restaurant.findById({ _id });
+    if (!restaurant)
+      restaurant = [];
     return restaurant;
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) return [];
@@ -15,26 +17,26 @@ const searchRestaurant = async searchCriteria => {
   try {
     let restaurants;
     if (searchCriteria.searchType === "coordinates") {
-      return new Promise(function(resolve, reject){
+      return new Promise(function (resolve, reject) {
         Restaurant.create_query()
-                  ._select("location.longitude")
-                  ._gte(searchCriteria.minLong)
-                  ._lte(searchCriteria.maxLong)
-                  ._select("location.latitude")
-                  ._gte(searchCriteria.minLat)
-                  ._lte(searchCriteria.maxLat)
-                  .run(function(err, result){
-                      console.log(result);
-                      if(err){
-                        reject();
-                      }
-                      resolve(result);
-                    });
-                  });
+          ._select("location.longitude")
+          ._gte(searchCriteria.minLong)
+          ._lte(searchCriteria.maxLong)
+          ._select("location.latitude")
+          ._gte(searchCriteria.minLat)
+          ._lte(searchCriteria.maxLat)
+          .run(function (err, result) {
+            console.log(result);
+            if (err) {
+              reject();
+            }
+            resolve(result);
+          });
+      });
     } else {
       restaurant = await Restaurant.filterData(searchCriteria);
       return restaurant;
-    } 
+    }
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) return [];
     throw error;

@@ -20,7 +20,6 @@ class Login extends React.Component {
   };
   submitSignInForm = async event => {
     event.preventDefault();
-    const { email, password } = this.state;
     try {
       const user = {...this.state};
       const isSignedIn = await this.props.signInUser(user);

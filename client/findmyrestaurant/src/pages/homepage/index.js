@@ -13,7 +13,7 @@ class Homepage extends React.Component {
     super(props);
     this.state = {
       page_num: 1,
-      searchInput:""
+      searchInput: ""
     }
   }
   fetchMoreRestaurants = () => {
@@ -28,9 +28,40 @@ class Homepage extends React.Component {
     event.preventDefault();
     const { searchInput } = this.state;
     try {
-      const searchQuery = { "location_city" : searchInput };
+      const searchQuery = { "location_city": searchInput };
       await this.props.searchRestaurants(searchQuery);
-      this.props.history.push('/search');
+      this.props.history.push({
+        pathname: '/search',
+        state: {searchLocation: searchInput}
+      });
+    } catch (error) {
+      console.log("Something went wrong while search", error.message);
+    }
+  };
+  searchRestaurantNearYou = async () => {
+    try {
+      if (navigator.geolocation) {
+        const coordinates = await new Promise(function (resolve, reject) {
+          navigator.geolocation.getCurrentPosition(function (location) {
+            resolve(location);
+          });
+        });
+        const { latitude, longitude } = coordinates.coords;
+        const searchQuery = {
+          "minLong": longitude - .2,
+          "maxLong": longitude + .2,
+          "minLat": latitude - .2,
+          "maxLat": latitude + .2,
+          "searchType": "coordinates"
+        };
+        await this.props.searchRestaurants(searchQuery);
+        this.props.history.push({
+          pathname: '/search',
+          state: {searchLocation: "current"}
+        });
+      } else {
+        throw new Error("Geolocation is not supported by this browser.");
+      }
     } catch (error) {
       console.log("Something went wrong while search", error.message);
     }
@@ -49,7 +80,10 @@ class Homepage extends React.Component {
                   placeholder="Search restaurants in city" />
                 <Button classes="search-btn">Find</Button>
               </form>
-              <p><a href="#" />Or view all 360 restaurants in and/or around your current city</p>
+              <p><button className="search-near-you" onClick={this.searchRestaurantNearYou}>
+                Or view all 360 restaurants in and/or around your current city
+                </button>
+              </p>
             </div>
           </div>
         </div>

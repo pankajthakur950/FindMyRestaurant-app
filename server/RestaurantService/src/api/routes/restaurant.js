@@ -25,9 +25,7 @@ module.exports = app => {
   app.get("/api/restaurants/:restaurant_id", async (req, res, next) => {
     try {
       const { restaurant_id } = req.params;
-      const restaurant = await RestaurantService.getRestaurantById(
-        restaurant_id
-      );
+      const restaurant = await RestaurantService.getRestaurantById(restaurant_id);
       if (restaurant.length === 0) {
         return res.status(404).send({ error: "No restaurant found with given ID" });
       } 
@@ -41,9 +39,6 @@ module.exports = app => {
     try {
       const criteria = req.query;
       const restaurant = await RestaurantService.searchRestaurant(criteria);
-      if (restaurant.length === 0) {
-        return res.status(404).send({ error: "No restaurant found with given ID" });
-      } 
       res.send(restaurant);
     } catch (error) {
       return next(error);

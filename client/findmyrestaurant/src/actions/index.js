@@ -26,7 +26,6 @@ export const signUpUser = user => async dispatch => {
             type = SIGN_UP_ERROR;
             payload = response.errors[0].message;
         } else {
-            console.log(response.data);
             payload = response.data;
         }
         dispatch({
@@ -45,7 +44,6 @@ export const signInUser = user => async dispatch => {
             if (response.errors) {
                 reject(response.errors[0]);
             } else {
-                console.log(response.data);
                 const user = {...response.data.signin};
                 dispatch({
                     type: SIGN_IN,
@@ -64,7 +62,6 @@ export const fetchRestaurants = (page_num) => async dispatch => {
     try {
         const searchRestaurantQuery = FETCHRESTAURANTS_QUERY(page_num);
         const response = await postData(searchRestaurantQuery);
-        console.log(response.data);
         dispatch({
             type: FETCH_RESTAURANTS,
             payload: response.data.restaurantList
@@ -78,7 +75,7 @@ export const searchRestaurants = (query) => async dispatch => {
     try {
         const fetchRestaurantListQuery = SEARCHRESTAURANTS_QUERY(query);
         const response = await postData(fetchRestaurantListQuery);
-        console.log(response.data);
+        console.log(response);
         dispatch({
             type: SEARCH_RESTAURANTS,
             payload: response.data.searchRestaurant

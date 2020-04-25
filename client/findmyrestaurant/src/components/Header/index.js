@@ -8,7 +8,7 @@ function Header({ currentUser }) {
   return (
     <div className="header container">
       <Link className="header__logo" to={"/"}>
-        <img src={Logo}/>
+        <img src={Logo} alt="FindMyRestaurant Logo"/>
       </Link>
       <div className="header__nav-links">
         <Link className="nav-link" to={"/shop"}>
