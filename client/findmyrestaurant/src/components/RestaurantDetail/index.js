@@ -5,7 +5,7 @@ import { fetchRestaurantDetails } from "actions";
 import HeroDetail from "components/RestaurantDetail/HeroDetail";
 import ReviewDetail from "components/RestaurantDetail/ReviewDetail";
 import ReviewSummary from "components/RestaurantDetail/ReviewSummary";
-import Map from 'components/Map';
+import Map from "components/Map";
 import { FaPhone, FaDirections } from "react-icons/fa";
 import "components/RestaurantDetail/RestaurantDetail.scss";
 import "react-circular-progressbar/dist/styles.css";
@@ -18,9 +18,27 @@ class RestaurantDetail extends React.Component {
         if (!this.props.restaurant) {
             return null;
         }
-        const { image_url, name, reviews, phone_numbers, cuisines } = this.props.restaurant;
+        const { reviews, phone_numbers, cuisines } = this.props.restaurant;
+        const mapProps = {
+            map: {
+                initialCenter: {
+                    lat: this.props.restaurant.location.latitude,
+                    lng: this.props.restaurant.location.longitude
+                },
+                zoom: 16,
+                containerStyle : {
+                    width: "250px",
+                    height: "250px"
+                },
+                draggable: false,
+                zoomControl: false,
+                fullscreenControl: false
+            },
+            restaurants: [this.props.restaurant],
+            highlightRestaurant: this.props.restaurant
+        }
         return (
-            <div className="restaurant-detail">
+            <div className="restaurant-detail" >
                 <div className="restaurant-detail__hero-banner">
                     <HeroDetail restaurant={this.props.restaurant} />
                 </div>
@@ -81,8 +99,7 @@ class RestaurantDetail extends React.Component {
                                     <span className="icon"><FaDirections /></span>
                                     <span>Direction</span>
                                 </h5>
-                                <Map lat={this.props.restaurant.location.latitude}
-                                    lng={this.props.restaurant.location.longitude}/>
+                                <Map {...mapProps}/>
                             </div>
                         </div>
                     </div>

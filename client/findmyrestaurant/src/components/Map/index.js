@@ -40,9 +40,7 @@ class MapContainer extends React.Component {
     render() {
         return (
             <Map google={this.props.google}
-                initialCenter={this.props.options.center}
-                onDragend={this.mapBoundChanged}
-                zoom={this.props.options.zoom}>
+                {...this.props.map}>
                 {
                     this.renderRestaurantMarker()
                 }
