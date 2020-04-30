@@ -1,5 +1,5 @@
 const axios = require("axios");
-const BASE_URL = "http://localhost:3001"
+const BASE_URL = "http://restaurant-service:3001"
 
 const getAllRestaurants = async (page_num) => {
     try {
