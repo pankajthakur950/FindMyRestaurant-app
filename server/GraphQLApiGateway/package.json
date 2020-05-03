@@ -4,7 +4,7 @@
   "description": "Api Gateway for find my restaurant application",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js"
+    "dev": "env PORT=3003 nodemon src/app.js"
   },
   "author": "Pankaj Thakur",
   "license": "ISC",
