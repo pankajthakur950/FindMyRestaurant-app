@@ -1,5 +1,7 @@
 const axios = require("axios");
-const BASE_URL = "http://restaurant-service:3001"
+const BASE_URL = process.env.RESTAURANT_HOST && process.env.RESTAURANT_PORT ?
+                `http://${process.env.RESTAURANT_HOST}:${process.env.RESTAURANT_PORT}` :
+                "http://localhost:3001";
 
 const getAllRestaurants = async (page_num) => {
     try {
