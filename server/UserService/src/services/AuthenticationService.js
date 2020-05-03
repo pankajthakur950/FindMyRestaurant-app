@@ -1,11 +1,10 @@
 const jwt = require('jwt-simple');
 const mongoose = require("mongoose");
 const User = mongoose.model("User");
-const config = require('../config/keys');
 
 function tokenForUser(user){
     const timeStamp = new Date().getTime();
-    return jwt.encode({sub: user.id, iat: timeStamp}, config.secret);
+    return jwt.encode({sub: user.id, iat: timeStamp}, process.env.JWT_SECRET);
 }
 
 const signupUser = async user => {

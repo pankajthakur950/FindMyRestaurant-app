@@ -4,15 +4,14 @@ const models = require('../models');
 
 module.exports = () => {
   //load mongoose connection
-  console.log(keys.mongoURI);
+  const mongooseURI = `${keys.mongoHost}:${keys.mongoPort}/${keys.mongoDB}`;
   mongoose
-    .connect(keys.mongoURI, {
+    .connect(mongooseURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     })
     .then(() => {
-      console.log("@@@@@@@@@@@@@@ SUCCESS....");
-      
+      console.log("Successfully connected the Restaurant Service to MongoDB");
     })
     .catch(error => {
       console.log(error);

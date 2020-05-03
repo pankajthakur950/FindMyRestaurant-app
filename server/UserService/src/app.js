@@ -5,6 +5,6 @@ const loaders = require('./loaders');
 const app = express();
 loaders(app);
 
-const PORT = process.env.PORT || keys.PORT;
+const PORT = process.env.PORT || keys.servicePort;
 app.listen(PORT);
 console.log("User service is up on port : "+PORT);
