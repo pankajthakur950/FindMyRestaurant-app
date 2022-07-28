@@ -7,6 +7,8 @@ services:
   mongo-db:
     #use the image from docker hub to create this container
     image: 'mongo'
+    volumes: 
+      - /usr/local/db:/data/db
     ports:
       - "27017:27017"
   #create container for node app
